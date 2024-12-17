@@ -51,7 +51,6 @@ canvas.addEventListener("click",(e)=>{
     const rect = canvas.getBoundingClientRect(); //to know coordinated of canvas element 
     
     if(arr_selected[0]){
-        // arr_selected[0].removeEventListener();
         arr_selected.splice(0,1);
     }
     
@@ -62,18 +61,20 @@ canvas.addEventListener("click",(e)=>{
             arr_selected.push(item);
             console.log(item.isSelected(xClick,yClick) + " for "+ item.text);
             canvas.addEventListener("mousemove",(e)=>{
-                // console.log(arr_selected[0]);
+                console.log(e);
                 const sel = arr_selected[0];
-                sel.move2(e.offsetX + sel.r*3/2,e.offsetY + sel.r*3/2);
+                
+                sel.move2(e.offsetX + sel.r*3/2,e.offsetY + sel.r *3/2);
                 drawCircleAgain(context);
             })
-            // canvas.addEventListener("click")
-            // item.move();
-            // drawCircleAgain(context);
+            
         }
     })
 })
 // ------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
@@ -142,7 +143,6 @@ class Circle{
         this.x = Math.random() * 100 + 10;
         this.y = Math.random() * 100 + 10;
     }
-    
     /**
      * setting x and y coordinate according to mouse position
      * @param {*} screen_x x-coordinate of mouse relative to the circle plus 3/2 times radius
