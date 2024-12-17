@@ -39,37 +39,39 @@ var arr = [];
  */
 var counter = 1;
 
+var selectedObject = null
 
+canvas.addEventListener("mousemove",(e)=>{
+    if(selectedObject != null) {
+        selectedObject.move2(e.offsetX ,e.offsetY );
+        drawCircleAgain(context);
+    }
+})
 
 
 // -----------------------------------------------------------------------------------------------------------
 /**
  * Event listener for clicking inside canvas
  */
-let arr_selected = [];
+
 canvas.addEventListener("click",(e)=>{
     const rect = canvas.getBoundingClientRect(); //to know coordinated of canvas element 
-    
-    if(arr_selected[0]){
-        arr_selected.splice(0,1);
-    }
-    
+
     let xClick = e.clientX - rect.left;   //left - x coordinate in reference to canvas
     let yClick = e.clientY - rect.top;
+
+
     arr.forEach((item)=>{
         if(item.isSelected(xClick,yClick)){
-            arr_selected.push(item);
-            console.log(item.isSelected(xClick,yClick) + " for "+ item.text);
-            canvas.addEventListener("mousemove",(e)=>{
-                console.log(e);
-                const sel = arr_selected[0];
-                
-                sel.move2(e.offsetX + sel.r*3/2,e.offsetY + sel.r *3/2);
-                drawCircleAgain(context);
-            })
-            
+            if(selectedObject == item) {
+                selectedObject = null
+                return 
+            } 
+            selectedObject = item
+            console.log(item.isSelected(xClick,yClick) + " for "+ item.text);            
         }
     })
+    console.log(`selected object is ${selectedObject}`)
 })
 // ------------------------------------------------------------------------------------------------------------
 
@@ -169,9 +171,9 @@ function drawCircleAgain(context){
 function drawCircle(){
     const rect = canvas.getBoundingClientRect();
     console.log(rect);
-    let random_x =  Math.floor(Math.random() * (canvas.width-100)+100);
-    let random_y =  Math.floor(Math.random() * (canvas.height -100)+100);
-    let random_r = Math.floor(Math.random() * (canvas.height/4) + 10);
+    let random_x =  Math.floor((Math.random() * canvas.width-100)+100);
+    let random_y =  Math.floor((Math.random() *canvas.height -100)+100);
+    let random_r = Math.floor((Math.random() * canvas.height/4) + 10);
     let random_color = `rgb(${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)},${Math.floor(Math.random()*256)})`;
     
     //drawing new circle
