@@ -62,9 +62,9 @@ canvas.addEventListener("click",(e)=>{
             arr_selected.push(item);
             console.log(item.isSelected(xClick,yClick) + " for "+ item.text);
             canvas.addEventListener("mousemove",(e)=>{
-                console.log(arr_selected[0]);
-
-                arr_selected[0].move2(e.clientX,e.clientY);
+                // console.log(arr_selected[0]);
+                const sel = arr_selected[0];
+                sel.move2(e.offsetX + sel.r*3/2,e.offsetY + sel.r*3/2);
                 drawCircleAgain(context);
             })
             // canvas.addEventListener("click")
@@ -74,43 +74,6 @@ canvas.addEventListener("click",(e)=>{
     })
 })
 // ------------------------------------------------------------------------------------------------------------
-
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-// let selectedCircle = null;
-// canvas.addEventListener('mousedown', (e) => {
-//             const mouseX = e.offsetX;
-//             const mouseY = e.offsetY;
-//             selectedCircle = arr.find(circle => circle.isSelected(mouseX, mouseY));
-//             if (selectedCircle) {
-//                 selectedCircle.isDragging = true;
-//             }
-//         });
-
-//         canvas.addEventListener('mousemove', (e) => {
-//             if (selectedCircle && selectedCircle.isDragging) {
-//                 const mouseX = e.offsetX;
-//                 const mouseY = e.offsetY;
-//                 selectedCircle.move(mouseX, mouseY);
-//                 drawCircleAgain();
-//             }
-//         });
-
-//         canvas.addEventListener('mouseup', () => {
-//             if (selectedCircle) {
-//                 selectedCircle.isDragging = false;
-//                 selectedCircle = null;
-//             }
-//         });
-
-//         canvas.addEventListener('mouseleave', () => {
-//             if (selectedCircle) {
-//                 selectedCircle.isDragging = false;
-//                 selectedCircle = null;
-//             }
-//         });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
@@ -179,7 +142,12 @@ class Circle{
         this.x = Math.random() * 100 + 10;
         this.y = Math.random() * 100 + 10;
     }
-
+    
+    /**
+     * setting x and y coordinate according to mouse position
+     * @param {*} screen_x x-coordinate of mouse relative to the circle plus 3/2 times radius
+     * @param {*} screen_y y-coordinate of mouse relative to the circle plus 3/2 times radius
+     */
     move2(screen_x,screen_y){
         this.x = screen_x;
         this.y = screen_y;
